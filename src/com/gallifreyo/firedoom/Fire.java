@@ -14,9 +14,7 @@ public class Fire {
 
     private int[] firePixelsArray;
 
-    private int temporary = 0;
-
-    private boolean debug = false;
+    private int c = 0;
 
     private static final Color[] colorArray = {new Color(7, 7, 7), new Color(31, 7, 7), new Color(47, 15, 7),
             new Color(71, 15, 7), new Color(87, 23, 7), new Color(103, 31, 7), new Color(119, 31, 7),
@@ -49,11 +47,10 @@ public class Fire {
             System.out.println("");
             for(int column = 0; column < fireWidth;column++) {
                 int indexPixel = column + (fireWidth * row);
-                //int fireIntensity = firePixelsArray[indexPixel];
                 System.out.print(firePixelsArray[indexPixel]+"");
             }
         }
-        System.out.println("\n-----------------------------------");
+
 
     }
 
@@ -85,9 +82,7 @@ public class Fire {
             return;
         }
 
-        //int decline = 1;
         int decline = r.nextInt(3);
-
 
         int intensityPixelBelow = firePixelsArray[pixelIndexBelow];
 
@@ -96,7 +91,6 @@ public class Fire {
         if((pixelIndex - decline) <= -1) {
             decline = 0;
         }
-
 
         firePixelsArray[pixelIndex - decline] = newIntensity;
 
@@ -107,44 +101,22 @@ public class Fire {
         calculateFirePropagation();
         //showFireStructure();
 
-
     }
 
     public void render(Graphics g) {
-
-        //g.setColor(new Color(0,0,0));
-        //g.setFont(new Font("Arial", Font.BOLD, 22));
-
-        //g.drawString("Data structure ="+firePixelsArray.length, 100, 400);
-        //g.drawString("Data structure ="+colorArray.length, 100, 450);
-
 
         for(int x = 0; x < fireHeight; x++) {
             for(int y = 0; y < fireWidth; y ++) {
                 int posX = y * 10;
                 int posY = x * 10;
 
+                g.setColor(colorArray[firePixelsArray[c]]);
+                g.fillRect(posX, posY, 10, 10);
 
-                if(debug) {
-
-                    g.drawString(""+firePixelsArray[temporary], posX, posY);
-
-
-                }else {
-
-                    g.setColor(colorArray[firePixelsArray[temporary]]);
-                    g.fillRect(posX, posY, 10, 10);
-
-                }
-                temporary++;
+                c++;
             }
         }
-        temporary = 0;
-
-
-
-
-
+        c = 0;
     }
 
 }
